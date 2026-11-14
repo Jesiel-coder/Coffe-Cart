@@ -96,6 +96,7 @@ function createCard(data) {
 
     card.appendChild(ingredientsList);
   }
+  // mostrar preço café
   if (data.price !== undefined) {
     const priceElement = document.createElement("p");
     //Formatação para preço em Reais
@@ -103,7 +104,65 @@ function createCard(data) {
     priceElement.className = "price-style";
     card.appendChild(priceElement);
   }
+  //controle de quantidade
+  let quantidade = 1;
+  
+  const controleQuantidade = document.createElement("div");
+  controleQuantidade.style.display = "flex";
+  controleQuantidade.style.alignItems = "center";
+  controleQuantidade.style.gap = "12px";
+  controleQuantidade.style.margin = "8px 0";
 
+  const btnMenos = document.createElement("button");
+  btnMenos.textContent = "-";
+  btnMenos.style.width = "32px";
+
+  const spanQuantidade = document.createElement("span");
+  spanQuantidade.textContent = quantidade;
+  spanQuantidade.style.fontWeight = "bold";
+
+  const btnMais = document.createElement("button");
+  btnMais.textContent = "+";
+  btnMais.style.width = "32px";
+
+  btnMais.addEventListener("click", () => {
+    quantidade++;
+    spanQuantidade.textContent = quantidade;
+  });
+
+  btnMenos.addEventListener("click", () => {
+    if (quantidade > 1) {
+      quantidade--;
+      spanQuantidade.textContent = quantidade;
+    }
+    });
+
+    controleQuantidade.appendChild(btnMenos);
+    controleQuantidade.appendChild(spanQuantidade);
+    controleQuantidade.appendChild(btnMais);
+    
+        //botão de adicionar ao carrinho
+    const btnAdicionar = document.createElement("button");
+    btnAdicionar.className = "btn-adicionar";
+    btnAdicionar.title = "Adicionar ao carrinho"; // aparece ao passar o mouse
+
+    const iconeAdicionar = document.createElement("img");
+    iconeAdicionar.src = "imgs/adicionar.png";
+    iconeAdicionar.alt = "Adicionar ao carrinho";
+    iconeAdicionar.className = "icone-adicionar";
+
+    btnAdicionar.appendChild(iconeAdicionar);
+
+    const linhaAcoes = document.createElement("div");
+    linhaAcoes.style.display = "flex";
+    linhaAcoes.style.justifyContent = "space-between";
+    linhaAcoes.style.alignItems = "center";
+    linhaAcoes.style.margin = "8px 0";
+
+    linhaAcoes.appendChild(controleQuantidade);
+    linhaAcoes.appendChild(btnAdicionar);
+
+    card.appendChild(linhaAcoes);
 
   // Adiciona o card à div root
   root.appendChild(card);

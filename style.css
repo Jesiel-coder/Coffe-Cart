@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   /* Alinha os cartões no centro horizontalmente */
-  align-items: start;
+  align-items: stretch; /* TER A MESMA ALTURA, ANTES ERA align-items: start;  */
   /* Alinha os cartões verticalmente */
   flex-wrap: wrap;
   /* Permite que os cartões quebrem linha se necessário */
@@ -18,6 +18,9 @@
   background-color: #fff;
   width: 300px;
   font-family: "Arial, sans-serif";
+
+  display: flex; /* Adiciona flexbox para o layout interno do cartão (TESTE) */
+  flex-direction: column; /* Organiza os elementos do cartão em coluna (TESTE) */
 }
 
 .image-style {
@@ -53,4 +56,62 @@
   color: #555;
   font-size: 14px;
   margin: 4px 0;
+}
+.price-style {
+  margin-top: auto; /* Empurra o preço para a parte inferior do cartão */
+  padding-top: 16px; /* Adiciona espaço acima do preço */
+  font-size: 16px;
+  font-weight: bold;
+  /*color: #b5651d; */
+  /*color: #5c3a21 */
+  color: #2d6a4f;
+}
+body { /* Adiciona um fundo legal */
+  background-color: #f9f6f0; 
+  margin: 0;
+  padding: 20px;
+}
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+/* Estilos para o cabeçalho TESTE */
+.header {
+  text-align: center;
+  margin-bottom: 32px;
+  color: #3d2b1f;
+}
+.header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  margin-bottom: 8px;
+}
+
+.btn-adicionar {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.icone-adicionar {
+  width: 64px;
+  height: 64px;
+  display: block;
+}
+.nav-link {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 8px 16px;
+  background-color: #2d6a4f;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.nav-link:hover {
+  background-color: #1b4332;
 }
