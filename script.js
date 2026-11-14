@@ -96,6 +96,14 @@ function createCard(data) {
 
     card.appendChild(ingredientsList);
   }
+  if (data.price !== undefined) {
+    const priceElement = document.createElement("p");
+    //Formatação para preço em Reais
+    priceElement.textContent = `R$ ${data.price.toFixed(2)}`;
+    priceElement.className = "price-style";
+    card.appendChild(priceElement);
+  }
+
 
   // Adiciona o card à div root
   root.appendChild(card);
