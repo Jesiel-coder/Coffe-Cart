@@ -58,15 +58,15 @@
   margin: 4px 0;
 }
 .price-style {
-  margin-top: auto; /* Empurra o preço para a parte inferior do cartão */
-  padding-top: 16px; /* Adiciona espaço acima do preço */
+  margin-top: auto; 
+  padding-top: 16px; 
   font-size: 16px;
   font-weight: bold;
   /*color: #b5651d; */
   /*color: #5c3a21 */
   color: #2d6a4f;
 }
-body { /* Adiciona um fundo legal */
+body { 
   background-color: #f9f6f0; 
   margin: 0;
   padding: 20px;
@@ -114,4 +114,242 @@ body {
 
 .nav-link:hover {
   background-color: #1b4332;
+}
+
+.link-carrinho {
+  position: relative;
+  display: inline-block;
+}
+
+.icone-carrinho {
+  width: 40px;
+  height: 40px;
+  display: block;
+}
+
+.contador-carrinho {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background: #c0392b;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 50%;
+  min-width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+/* Buyzão */
+.checkout-container {
+  max-width: 500px;
+  margin: 0 auto;
+  background: #ffffff;
+  padding: 28px;
+  border-radius: 12px;
+}
+
+.resumo-box {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #eee;
+  text-align: justify;
+}
+
+.resumo-box h3 {
+  margin: 0;
+  color: #3d2b1f;
+  font-family: 'Playfair Display', serif;
+}
+.checkout-form .form-group {
+  margin-bottom: 18px;
+}
+
+.checkout-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #3d2b1f;
+  font-size: 14px;
+}
+
+.checkout-form input,
+.checkout-form select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+.checkout-form input:focus,
+.checkout-form select:focus {
+  outline: none;
+  border-color: #2d6a4f;
+}
+.btn-finalizar {
+  width: 100%;
+  background-color: #2d6a4f;
+  color: white;
+  border: none;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+.btn-finalizar:hover {
+  background-color: #1b4332;
+}
+
+.info-carrinho {
+  flex: 1;
+}
+
+.item-carrinho {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #fff;
+  border: 1px solid #e0d8cc;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 12px auto;
+  max-width: 600px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.foto-carrinho {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.item-carrinho h3 {
+  margin: 0 0 4px 0;
+  font-size: 18px;
+  color: #3b2a1f;
+}
+
+.item-carrinho p {
+  margin: 0 0 10px 0;
+  color: #2e6b4f;
+  font-weight: bold;
+}
+
+.controle-carrinho {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.controle-carrinho button:not(.btn-remover) {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #c9bfae;
+  border-radius: 50%;
+  background: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.controle-carrinho button:hover {
+  background: #f1ebe0;
+}
+
+.controle-carrinho span {
+  min-width: 24px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.btn-remover {
+  margin-left: auto;      
+  border: 1px solid #c0392b;
+  border-radius: 6px;
+  background: #fff;
+  color: #c0392b;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.btn-remover:hover {
+  background: #c0392b;
+  color: #fff;
+}
+
+.total-carrinho {
+  max-width: 600px;
+  margin: 16px auto;
+  text-align: right;
+  font-size: 22px;
+  font-weight: bold;
+  color: #2e6b4f;
+}
+
+.input-quantidade {
+  width: 56px;
+  height: 30px;
+  text-align: center;
+  font-weight: bold;
+  border: 1px solid #c9bfae;
+  border-radius: 6px;
+}
+
+/* linha com os dois botões, alinhada com a largura dos cards */
+.acoes-carrinho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;          /* no celular, quebra em duas linhas se faltar espaço */
+  max-width: 600px;
+  margin: 16px auto;
+}
+
+.btn-voltar,
+.btn-comprar {
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* botão secundário: só com borda */
+.btn-voltar {
+  border: 1px solid #2d6a4f;
+  color: #2d6a4f;
+  background: transparent;
+}
+
+.btn-voltar:hover {
+  background: #2d6a4f;
+  color: #fff;
+}
+
+/* botão principal: verde cheio */
+.btn-comprar {
+  border: 1px solid #2d6a4f;
+  background: #2d6a4f;
+  color: #fff;
+}
+
+.btn-comprar:hover {
+  background: #1b4332;
 }

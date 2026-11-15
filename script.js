@@ -1,3 +1,42 @@
+// ===== CABEÇALHO (criado pelo JS) =====
+const linkCarrinho = document.createElement("a");
+linkCarrinho.href = "cart.html";
+linkCarrinho.className = "link-carrinho";
+
+const iconeCarrinho = document.createElement("img");
+iconeCarrinho.src = "imgs/icone_carrinho.png";
+iconeCarrinho.alt = "Carrinho";
+iconeCarrinho.className = "icone-carrinho";
+
+const contador = document.createElement("span");
+contador.id = "contador-carrinho";
+contador.className = "contador-carrinho";
+contador.textContent = getCount();
+
+linkCarrinho.appendChild(iconeCarrinho);
+linkCarrinho.appendChild(contador);
+
+// ----- parte nova: o resto do cabeçalho -----
+const header = document.createElement("header");
+header.className = "header";
+
+const titulo = document.createElement("h1");
+titulo.textContent = "Café Santa Maria";
+
+const subtitulo = document.createElement("p");
+subtitulo.textContent = "Grãos selecionados e bebidas artesanais";
+
+const nav = document.createElement("nav");
+nav.appendChild(linkCarrinho);
+
+header.appendChild(titulo);
+header.appendChild(subtitulo);
+header.appendChild(nav);
+
+// coloca o cabeçalho antes da div#root
+document.getElementById("root").before(header);
+
+
 async function fetchData(apiUrl) {
   try {
     // Faz a requisição à API
@@ -23,7 +62,8 @@ async function fetchData(apiUrl) {
 }
 
 // Exemplo de uso
-const apiEndpoint = "http://localhost:3000/coffee"; // Substitua pelo URL da API desejada
+const host = window.location.hostname || "localhost";
+const apiEndpoint = `http://${host}:3000/coffee`; // Substitua pelo URL da API desejada
 
 fetchData(apiEndpoint)
   .then((data) => {
@@ -117,9 +157,24 @@ function createCard(data) {
   btnMenos.textContent = "-";
   btnMenos.style.width = "32px";
 
-  const spanQuantidade = document.createElement("span");
-  spanQuantidade.textContent = quantidade;
-  spanQuantidade.style.fontWeight = "bold";
+  const inputQuantidade = document.createElement("input");
+  inputQuantidade.type = "number";
+  inputQuantidade.min = 1;
+  inputQuantidade.value = quantidade;
+  inputQuantidade.className = "input-quantidade";
+
+  // enquanto digita: se for um inteiro de 1 pra cima, guarda na variável
+  inputQuantidade.addEventListener("input", () => {
+    const valor = Number(inputQuantidade.value);
+    if (Number.isInteger(valor) && valor >= 1) {
+      quantidade = valor;
+    }
+  });
+
+  // ao sair do campo: se deixou vazio ou inválido, volta pro último valor bom
+  inputQuantidade.addEventListener("change", () => {
+    inputQuantidade.value = quantidade;
+  });
 
   const btnMais = document.createElement("button");
   btnMais.textContent = "+";
@@ -127,18 +182,18 @@ function createCard(data) {
 
   btnMais.addEventListener("click", () => {
     quantidade++;
-    spanQuantidade.textContent = quantidade;
+    inputQuantidade.value = quantidade;
   });
 
   btnMenos.addEventListener("click", () => {
     if (quantidade > 1) {
       quantidade--;
-      spanQuantidade.textContent = quantidade;
+      inputQuantidade.value = quantidade;
     }
     });
 
     controleQuantidade.appendChild(btnMenos);
-    controleQuantidade.appendChild(spanQuantidade);
+    controleQuantidade.appendChild(inputQuantidade);
     controleQuantidade.appendChild(btnMais);
     
         //botão de adicionar ao carrinho
@@ -152,6 +207,11 @@ function createCard(data) {
     iconeAdicionar.className = "icone-adicionar";
 
     btnAdicionar.appendChild(iconeAdicionar);
+
+     btnAdicionar.addEventListener("click", () => {
+      addItem(data, quantidade);
+      atualizarContador();
+    });
 
     const linhaAcoes = document.createElement("div");
     linhaAcoes.style.display = "flex";
