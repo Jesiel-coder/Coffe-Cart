@@ -1,3 +1,4 @@
+// ===== CARRINHO (localStorage) =====
 function getCart() {
   const texto = localStorage.getItem("cart");
   if (texto === null) {
@@ -8,7 +9,6 @@ function getCart() {
 
 function addItem(coffee, quantidade) {
   const cart = getCart();
-
   const existente = cart.find((item) => item.id === coffee.id);
 
   if (existente) {
@@ -17,13 +17,47 @@ function addItem(coffee, quantidade) {
     cart.push({
       id: coffee.id,
       title: coffee.title,
-      price: coffee.price,
-      image: coffee.image,      // <- a linha nova, para a foto aparecer no carrinho
+      price: coffee.price ?? 0,
+      image: coffee.image,
       quantity: quantidade,
     });
   }
 
   localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+// delta = +1 (aumenta) ou -1 (diminui); se chegar a 0, o item sai
+function changeQuantity(id, delta) {
+  const cart = getCart();
+  const item = cart.find((i) => i.id === id);
+  if (!item) return;
+
+  item.quantity += delta;
+  const novoCart = cart.filter((i) => i.quantity > 0);
+  localStorage.setItem("cart", JSON.stringify(novoCart));
+}
+
+// define a quantidade direto (usado quando a pessoa digita o número)
+function setQuantity(id, novaQuantidade) {
+  if (!Number.isInteger(novaQuantidade) || novaQuantidade < 1) return;
+
+  const cart = getCart();
+  const item = cart.find((i) => i.id === id);
+  if (!item) return;
+
+  item.quantity = novaQuantidade;
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+// tira o item inteiro do carrinho
+function removeItem(id) {
+  const cart = getCart();
+  const novoCart = cart.filter((item) => item.id !== id);
+  localStorage.setItem("cart", JSON.stringify(novoCart));
+}
+
+function clearCart() {
+  localStorage.removeItem("cart");
 }
 
 function getCount() {
@@ -35,23 +69,6 @@ function getCount() {
   return total;
 }
 
-function atualizarContador() {
-  document.getElementById("contador-carrinho").textContent = getCount();
-}
-
-function changeQuantity(id, delta) {
-  const cart = getCart();
-
-  const item = cart.find((i) => i.id === id);
-  if (!item) return;
-
-  item.quantity += delta;
-
-  const novoCart = cart.filter((i) => i.quantity > 0);
-
-  localStorage.setItem("cart", JSON.stringify(novoCart));
-}
-
 function getTotal() {
   const cart = getCart();
   let total = 0;
@@ -61,22 +78,10 @@ function getTotal() {
   return total;
 }
 
-function removeItem(id) {
-  const cart = getCart();
-
-  const novoCart = cart.filter((item) => item.id !== id);
-
-  localStorage.setItem("cart", JSON.stringify(novoCart));
-}
-
-function setQuantity(id, novaQuantidade) {
-  if (!Number.isInteger(novaQuantidade) || novaQuantidade < 1) return;
-
-  const cart = getCart();
-  const item = cart.find((i) => i.id === id);
-  if (!item) return;
-
-  item.quantity = novaQuantidade;
-
-  localStorage.setItem("cart", JSON.stringify(cart));
+// atualiza o número da bolinha do cabeçalho
+function atualizarContador() {
+  const contador = document.getElementById("contador-carrinho");
+  if (contador) {
+    contador.textContent = getCount();
+  }
 }

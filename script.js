@@ -1,42 +1,7 @@
-// ===== CABEÇALHO (criado pelo JS) =====
-const linkCarrinho = document.createElement("a");
-linkCarrinho.href = "cart.html";
-linkCarrinho.className = "link-carrinho";
+// ===== CABEÇALHO (função vem do ui.js) =====
+criarCabecalho();
 
-const iconeCarrinho = document.createElement("img");
-iconeCarrinho.src = "imgs/icone_carrinho.png";
-iconeCarrinho.alt = "Carrinho";
-iconeCarrinho.className = "icone-carrinho";
-
-const contador = document.createElement("span");
-contador.id = "contador-carrinho";
-contador.className = "contador-carrinho";
-contador.textContent = getCount();
-
-linkCarrinho.appendChild(iconeCarrinho);
-linkCarrinho.appendChild(contador);
-
-// ----- parte nova: o resto do cabeçalho -----
-const header = document.createElement("header");
-header.className = "header";
-
-const titulo = document.createElement("h1");
-titulo.textContent = "Café Santa Maria";
-
-const subtitulo = document.createElement("p");
-subtitulo.textContent = "Grãos selecionados e bebidas artesanais";
-
-const nav = document.createElement("nav");
-nav.appendChild(linkCarrinho);
-
-header.appendChild(titulo);
-header.appendChild(subtitulo);
-header.appendChild(nav);
-
-// coloca o cabeçalho antes da div#root
-document.getElementById("root").before(header);
-
-
+// ===== BUSCAR DADOS DA API =====
 async function fetchData(apiUrl) {
   try {
     // Faz a requisição à API
@@ -61,13 +26,12 @@ async function fetchData(apiUrl) {
   }
 }
 
-// Exemplo de uso
-const host = window.location.hostname || "localhost";
-const apiEndpoint = `http://${host}:3000/coffee`; // Substitua pelo URL da API desejada
+// location.hostname pega o endereço da barra do navegador,
+// então funciona no PC (127.0.0.1) e no celular (IP do PC)
+const apiEndpoint = `http://${location.hostname}:3000/coffee`;
 
 fetchData(apiEndpoint)
   .then((data) => {
-    console.log("Dados obtidos da API:", data);
     for (let card of data) {
       createCard(card);
     }
@@ -76,20 +40,7 @@ fetchData(apiEndpoint)
     console.error("Erro durante a obtenção dos dados:", error);
   });
 
-/*
-// Dados fornecidos
-const jsonData = {
-  title: "Black Coffee",
-  description:
-    "Svart kaffe är så enkelt som det kan bli med malda kaffebönor dränkta i hett vatten, serverat varmt. Och om du vill låta fancy kan du kalla svart kaffe med sitt rätta namn: café noir.",
-  ingredients: ["Coffee"],
-  image:
-    "https://images.unsplash.com/photo-1494314671902-399b18174975?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  id: 1,
-};
-*/
-
-// Função para criar o card
+// ===== CRIAR O CARD =====
 function createCard(data) {
   // Seleciona a div com id "root"
   const root = document.getElementById("root");
@@ -136,22 +87,22 @@ function createCard(data) {
 
     card.appendChild(ingredientsList);
   }
-  // mostrar preço café
+
+  // Mostrar preço
   if (data.price !== undefined) {
     const priceElement = document.createElement("p");
-    //Formatação para preço em Reais
-    priceElement.textContent = `R$ ${data.price.toFixed(2)}`;
+    priceElement.textContent = formatarPreco(data.price);
     priceElement.className = "price-style";
     card.appendChild(priceElement);
   }
-  //controle de quantidade
+
+  // ----- controle de quantidade -----
   let quantidade = 1;
-  
+
   const controleQuantidade = document.createElement("div");
   controleQuantidade.style.display = "flex";
   controleQuantidade.style.alignItems = "center";
   controleQuantidade.style.gap = "12px";
-  controleQuantidade.style.margin = "8px 0";
 
   const btnMenos = document.createElement("button");
   btnMenos.textContent = "-";
@@ -162,19 +113,6 @@ function createCard(data) {
   inputQuantidade.min = 1;
   inputQuantidade.value = quantidade;
   inputQuantidade.className = "input-quantidade";
-
-  // enquanto digita: se for um inteiro de 1 pra cima, guarda na variável
-  inputQuantidade.addEventListener("input", () => {
-    const valor = Number(inputQuantidade.value);
-    if (Number.isInteger(valor) && valor >= 1) {
-      quantidade = valor;
-    }
-  });
-
-  // ao sair do campo: se deixou vazio ou inválido, volta pro último valor bom
-  inputQuantidade.addEventListener("change", () => {
-    inputQuantidade.value = quantidade;
-  });
 
   const btnMais = document.createElement("button");
   btnMais.textContent = "+";
@@ -190,43 +128,54 @@ function createCard(data) {
       quantidade--;
       inputQuantidade.value = quantidade;
     }
-    });
+  });
 
-    controleQuantidade.appendChild(btnMenos);
-    controleQuantidade.appendChild(inputQuantidade);
-    controleQuantidade.appendChild(btnMais);
-    
-        //botão de adicionar ao carrinho
-    const btnAdicionar = document.createElement("button");
-    btnAdicionar.className = "btn-adicionar";
-    btnAdicionar.title = "Adicionar ao carrinho"; // aparece ao passar o mouse
+  // enquanto digita: se for um inteiro de 1 pra cima, guarda na variável
+  inputQuantidade.addEventListener("input", () => {
+    const valor = Number(inputQuantidade.value);
+    if (Number.isInteger(valor) && valor >= 1) {
+      quantidade = valor;
+    }
+  });
 
-    const iconeAdicionar = document.createElement("img");
-    iconeAdicionar.src = "imgs/adicionar.png";
-    iconeAdicionar.alt = "Adicionar ao carrinho";
-    iconeAdicionar.className = "icone-adicionar";
+  // ao sair do campo: se deixou vazio ou inválido, volta pro último valor bom
+  inputQuantidade.addEventListener("change", () => {
+    inputQuantidade.value = quantidade;
+  });
 
-    btnAdicionar.appendChild(iconeAdicionar);
+  controleQuantidade.appendChild(btnMenos);
+  controleQuantidade.appendChild(inputQuantidade);
+  controleQuantidade.appendChild(btnMais);
 
-     btnAdicionar.addEventListener("click", () => {
-      addItem(data, quantidade);
-      atualizarContador();
-    });
+  // ----- botão de adicionar ao carrinho -----
+  const btnAdicionar = document.createElement("button");
+  btnAdicionar.className = "btn-adicionar";
+  btnAdicionar.title = "Adicionar ao carrinho";
 
-    const linhaAcoes = document.createElement("div");
-    linhaAcoes.style.display = "flex";
-    linhaAcoes.style.justifyContent = "space-between";
-    linhaAcoes.style.alignItems = "center";
-    linhaAcoes.style.margin = "8px 0";
+  const iconeAdicionar = document.createElement("img");
+  iconeAdicionar.src = "imgs/adicionar.png";
+  iconeAdicionar.alt = "Adicionar ao carrinho";
+  iconeAdicionar.className = "icone-adicionar";
 
-    linhaAcoes.appendChild(controleQuantidade);
-    linhaAcoes.appendChild(btnAdicionar);
+  btnAdicionar.appendChild(iconeAdicionar);
 
-    card.appendChild(linhaAcoes);
+  btnAdicionar.addEventListener("click", () => {
+    addItem(data, quantidade);
+    atualizarContador();
+  });
+
+  // ----- linha com quantidade (esquerda) e botão (direita) -----
+  const linhaAcoes = document.createElement("div");
+  linhaAcoes.style.display = "flex";
+  linhaAcoes.style.justifyContent = "space-between";
+  linhaAcoes.style.alignItems = "center";
+  linhaAcoes.style.margin = "8px 0";
+
+  linhaAcoes.appendChild(controleQuantidade);
+  linhaAcoes.appendChild(btnAdicionar);
+
+  card.appendChild(linhaAcoes);
 
   // Adiciona o card à div root
   root.appendChild(card);
 }
-
-// Executa a função para criar o card
-//createCard(jsonData);

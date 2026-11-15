@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   /* Alinha os cartões no centro horizontalmente */
-  align-items: stretch; /* TER A MESMA ALTURA, ANTES ERA align-items: start;  */
+  align-items: stretch; /* Cada cartão vai ficar alinhado com mesma altura/
   /* Alinha os cartões verticalmente */
   flex-wrap: wrap;
   /* Permite que os cartões quebrem linha se necessário */
@@ -19,8 +19,8 @@
   width: 300px;
   font-family: "Arial, sans-serif";
 
-  display: flex; /* Adiciona flexbox para o layout interno do cartão (TESTE) */
-  flex-direction: column; /* Organiza os elementos do cartão em coluna (TESTE) */
+  display: flex; /* Adiciona flexbox para o layout interno do cartão*/
+  flex-direction: column; /* Organiza os elementos do cartão em coluna*/
 }
 
 .image-style {
@@ -62,8 +62,8 @@
   padding-top: 16px; 
   font-size: 16px;
   font-weight: bold;
-  /*color: #b5651d; */
-  /*color: #5c3a21 */
+  /*color: #b5651d; COR TESTE*/
+  /*color: #5c3a21 COR TESTE*/
   color: #2d6a4f;
 }
 body { 
@@ -74,7 +74,7 @@ body {
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
 }
-/* Estilos para o cabeçalho TESTE */
+/* Estilos para o cabeçalho*/
 .header {
   text-align: center;
   margin-bottom: 32px;
@@ -149,7 +149,7 @@ body {
   align-items: center;
   gap: 16px;
 }
-/* Buyzão */
+/*Buy*/
 .checkout-container {
   max-width: 500px;
   margin: 0 auto;
