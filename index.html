@@ -1,18 +1,19 @@
 <!--comando pra rodar o servidor json-server.
 FOR /f "tokens=*" %i IN ('fnm env') DO CALL %i
-npx json-server db.json 
+npx json-server --host 0.0.0.0 db.json 
 depois rodar o index no live server -->
 
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Cafeteria Santa Maria</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div id="root" class="product-container"></div>
+    <script src="cart.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
